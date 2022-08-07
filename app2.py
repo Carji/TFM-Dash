@@ -6,8 +6,8 @@ from streamlit_pandas_profiling import st_profile_report
 
 def app():
     df_0 = pd.read_csv("games-data-cleaned.csv")
-    df=df_0.iloc[:,0:15]
-    
+    df=df_0.iloc[:,0:15].convert_dtypes()
+
     if st.checkbox("Limitar a títulos calificados"):
         df_calif=df.loc[df['score']>0]
         pr = ProfileReport(df_calif, explorative=True)
@@ -22,4 +22,6 @@ def app():
         st.write(df.head(10))
         st.write('---')
         st.header('**Pandas Profiling Report**')
+        st.write("Number of errors generating report:")
+        st.write(pr)
         st_profile_report(pr)
