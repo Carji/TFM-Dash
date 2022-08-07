@@ -12,7 +12,7 @@ def app():
 
     hello_world = """st.write('### Sandbox')
 
-df=pd.read_csv("genre.csv")
+df=pd.read_csv("games-data-cleaned.csv")
 
 fig = plt.figure(figsize=(10, 4))
 sns.boxplot(x='platform', y = 'score', data = df)
