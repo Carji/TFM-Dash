@@ -7,7 +7,8 @@ import streamlit as st
 st.set_page_config(layout="wide")
 hojas = {
     "Análisis Exploratorio": app0,
-    "Panda's Profiling Report": app2,
+# App2 Desactivada en cloud, no funciona con capas gratuitas. En local funciona OK.
+#    "Panda's Profiling Report": app2, 
     "Sistema de recomendación": app1,
     "Buscador de títulos por plataforma":app4,
     "Sandbox": app3
