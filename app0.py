@@ -4,8 +4,8 @@ import plotly.express as px
 
 
 def app():
-
-    st.title("Análisis exploratorio de títulos de videojuegos")
+    st.markdown("""---""") 
+    st.header("Análisis exploratorio de títulos de videojuegos")
 
     picker = st.sidebar.selectbox("Desplegable", ["Análisis por plataforma", "Análisis por otros ejes"], key="sidebarselector")
 

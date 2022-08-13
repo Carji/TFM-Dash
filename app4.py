@@ -15,8 +15,9 @@ def app():
         features = ["name","genre","developer","platform", "score"]
         for i in features:
             games[i] = games[i].fillna(" ")
-
-        st.subheader('Búsqueda de títulos por plataforma')
+        st.markdown("""---""") 
+        st.header('Búsqueda de títulos por plataforma')
+        st.markdown("""---""") 
         platform_name = st.selectbox('Select a Platform', options=games.platform.unique())
         platform_subset = st.multiselect('Selecciona un juego (admite entrada por texto)', games[games["platform"]==platform_name].sort_values(ascending=False, by='score').name.unique(), default=games[games["platform"]==platform_name].iloc[:1].name)
         st.write(" ")

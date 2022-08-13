@@ -8,7 +8,7 @@ def app():
 
 
 
-
+        st.markdown("""---""") 
         st.header("Recomendación de títulos empleando K-Nearest Neighbors")
         st.markdown("""---""")
 

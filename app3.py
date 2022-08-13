@@ -8,9 +8,13 @@ from streamlit_ace import st_ace
 
 
 def app():
+    st.markdown("""---""") 
+    st.header('Entorno Sandbox')
+    st.markdown("""---""") 
     display, editor = st.columns((2, 1))
 
-    hello_world = """st.write('### Sandbox')
+
+    hello_world = """
 
 df=pd.read_csv("games-data-cleaned.csv")
 

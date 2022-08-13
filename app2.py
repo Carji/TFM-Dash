@@ -5,6 +5,7 @@ from streamlit_pandas_profiling import st_profile_report
 
 
 def app():
+    st.markdown("""---""") 
     df_0 = pd.read_csv("games-data-cleaned.csv")
     df=df_0.iloc[:,0:15].convert_dtypes()
 
