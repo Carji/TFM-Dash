@@ -2,7 +2,7 @@ mkdir -p ~/.streamlit/
 
 echo "\
 [general]\n\
-email = \"juanpacualete12@gmail.com\"\n\
+email = \"juanpacualete12@streamlit.com\"\n\
 " > ~/.streamlit/credentials.toml
 
 echo "\
@@ -10,4 +10,9 @@ echo "\
 headless = true\n\
 enableCORS=false\n\
 port = $PORT\n\
+[theme]\n\
+backgroundColor="#e3e3e6"\n\
+secondaryBackgroundColor="#a9a9ad"\n\
+textColor="#000000"\n\
+font="serif"\n\
 " > ~/.streamlit/config.toml
