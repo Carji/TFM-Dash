@@ -46,6 +46,7 @@ def app():
 
     if picker == "Análisis por otros ejes":   
         df_games = pd.read_csv("games-data-cleaned.csv") 
+        df_games["r-date"]=pd.to_datetime(df_games["r-date"])
         st.markdown("""---""")  
 
             
@@ -63,6 +64,11 @@ def app():
         if x_axis and y_axis and color_sc:
             scatter_fig = px.scatter(df_games,x=x_axis, y=y_axis, color=color_sc, hover_data=['name'])
             scatter_fig.update_xaxes(categoryorder='category ascending') 
+            if x_axis=="r-date":
+                scatter_fig.update_xaxes(type="date")
+            if y_axis=="r-date":
+                scatter_fig.update_yaxes(type="date")
+
             scatter_fig.update_yaxes(categoryorder='category ascending')
 
             if x_axis=="score" or x_axis=="user_score":
