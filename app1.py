@@ -6,37 +6,30 @@ import requests
 from sklearn.neighbors import NearestNeighbors
 def app():
 
-
-
         st.markdown("""---""") 
         st.header("Recomendación de títulos empleando K-Nearest Neighbors")
         st.markdown("""---""")
-
-
-         
 
         with st.sidebar:   
             cs = st.columns(1)
             with cs[0]:
                 st.subheader("Parámetros para el recomendador")
                 knn_n=st.slider("Valor del parámetro K:", min_value=1, max_value=1000, value=350)
-                metric_var=st.selectbox("Métrica a emplear:", options=('euclidean', 'manhattan', 'minkowski', 'chebyshev'))
+                metric_var=st.selectbox("Métrica a emplear:", options=('euclidean', 'cosine','manhattan', 'minkowski', 'chebyshev'))
                 leaf_var=st.slider("Mínimo de puntos por nodo:", min_value=1, max_value=300, value=30)
                 reco=st.slider('Indica cuántas recomendaciones quieres obtener', min_value=1, max_value=10, value=3)
 
-
-
                 st.write('Por defecto se consideran los géneros y score normalizado del título seleccionado para realizar la recomendación.')
 
-                if st.checkbox("Incluir el año de lanzamiento del título como criterio:"):
+                if st.checkbox("Marcar la casilla para incluir el año de lanzamiento del título como criterio"):
                     criterio_anyo=1
                 else: 
                     criterio_anyo=0
 
         column_0 = 16
-        column_x=193+criterio_anyo
+        column_x=194+criterio_anyo
 
-        neigh = NearestNeighbors(n_neighbors=knn_n, leaf_size=leaf_var, metric=metric_var)
+        neigh = NearestNeighbors(n_neighbors=knn_n, leaf_size=leaf_var, metric=metric_var, n_jobs=-1)
 
         def load_data():
             data = pd.read_csv("games-data-cleaned.csv")
@@ -46,6 +39,7 @@ def app():
         neigh.fit(df_etl.iloc[:,column_0:column_x])
 
         st.subheader("Título sobre el que se realiza la recomendación")
+
         cs2 = st.columns(1)
         with cs2[0]:
              game =st.selectbox('Selecciona un título (admite entrada por texto)', df_etl.sort_values(by='score', ascending=False).name.unique())
@@ -65,16 +59,18 @@ def app():
 
         df=df_closest[df_closest['name']!=game]
         df=df[df.index.isin(index_closest)]
-
+        filtered_selfindex= [x for x in index_closest if x not in df_closest[df_closest['name']==game].index.values]
+#        st.write(index_closest)
+#        st.write(filtered_selfindex)
         st.markdown("""---""")
 
-        st.subheader("Juegos recomendados, ordenados por 'cercanía' y score")
+        st.subheader("Juegos recomendados, ordenados por distancia al seleccionado")
         st.write(" ")
 
-        recom=df.sort_values(ascending=False, by='score').reset_index(drop=True)
-
-        for i in range(reco):
-
+        recom=df
+        slot=-1
+        for i in filtered_selfindex[0:reco]:
+            slot=slot+1
             st.markdown("""---""")
             col1, mid, col2, mid, col3 = st.columns([2,5,8,1,12])
             with col1:
@@ -88,11 +84,12 @@ def app():
                         st.write("Sin críticas.")
                     else:
                         st.write("Críticas Positivas: ",str(round(int(recom.loc[i, 'critics_positive'])/int(recom.loc[i, 'critics'])*100,2)),'%')
-                    st.write(recom.loc[i, 'r-date'])
+                    st.write("Fecha de Lanzamiento: ",recom.loc[i, 'r-date'])
             with col3:
                     st.write("Desarrollador: ",recom.loc[i, 'developer'])
                     st.write("Generos: ",recom.loc[i, 'genre'])
-                    st.write("Resumen: ",recom.loc[i, 'summary'])
+                    st.write("Resumen: ",recom.loc[i, 'summary'],"...")
+                    st.write("KNN-Distance: ",round(neigh.kneighbors(input_game)[0][0,slot],3))
 
 
         if st.checkbox("Marcar para mostrar el dataframe de los juegos recomendados:"):
