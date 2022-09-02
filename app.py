@@ -1,17 +1,13 @@
-import app0
-import app1
-import app2
-import app3
-import app4
+from src import app0, app1, app2, app3, app4
 import streamlit as st
 st.set_page_config(layout="wide")
 hojas = {
-    "Análisis Exploratorio": app0,
+    "Análisis exploratorio": app0,
 # App2 Desactivada en cloud, no funciona con capas gratuitas. En local funciona OK.
 #    "Panda's Profiling Report": app2, 
     "Sistema de recomendación": app1,
     "Buscador de títulos por plataforma":app4,
-    "Entorno Sandbox": app3
+    "Entorno de pruebas": app3
 }
 st.markdown("""
     <style type="text/css">
@@ -40,9 +36,9 @@ st.markdown("""
                 }
         </style>
         """, unsafe_allow_html=True)
-st.title('Dashboard para análisis exploratorio y recomendación de videojuegos🕹️')
-st.sidebar.image('cidaen.png')
-st.sidebar.title('Contenido del Dashboard')
+st.title('Cuadro de mando para análisis exploratorio y recomendación de videojuegos🕹️')
+st.sidebar.image('img/cidaen.png')
+st.sidebar.title('Contenido de la aplicación')
 
 selection = st.sidebar.radio("", list(hojas.keys()))
 page = hojas[selection]
