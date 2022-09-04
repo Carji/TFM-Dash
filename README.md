@@ -14,4 +14,4 @@ Tras esto, lanzar la aplicación con el código
 streamlit run app.py
 ```
 
-El dashboard se ejecutará de forma local en nuestro navegador.
+El cuadro de mando se ejecutará de forma local en nuestro navegador predeterminado.
